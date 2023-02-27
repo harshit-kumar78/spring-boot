@@ -2,13 +2,14 @@ package com.example;
 
 import org.springframework.validation.annotation.Validated;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Pattern;
 
-//@Validated
+
 public class CustomerDTO {
 	
 	
@@ -19,9 +20,20 @@ public class CustomerDTO {
 //	@NotBlank(message="please provide some values")
 	private String emailId;
 
-	@NotNull(message = "Please provide customer name")
+	@Null(message = "Please provide customer name")
     @Pattern(regexp="[A-Za-z]+( [A-Za-z]+)*", message="{customer.name.error}")
 	private String name;
+	@Valid
+	private AddressDTO addressDTO;
+	public AddressDTO getAddressDTO() {
+		return addressDTO;
+	}
+
+	public void setAddressDTO(AddressDTO addressDTO) {
+		this.addressDTO = addressDTO;
+	}
+
+	
 	
 	public CustomerDTO(Integer customerId, String emailId, String name) {
 		super();
