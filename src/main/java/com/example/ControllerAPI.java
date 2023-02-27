@@ -51,7 +51,8 @@ public class ControllerAPI {
 		
 			Customer customer = new Customer("pankaj",23);
 			//response=new ResponseEntity<>(customer,HttpStatus.OK);
-			throw new Exception("not found");
+		
+			throw new Exception("from exception");
 //			
 		
 		//return response;

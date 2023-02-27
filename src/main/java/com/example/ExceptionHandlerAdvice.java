@@ -1,5 +1,7 @@
 package com.example;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -13,8 +15,18 @@ public class ExceptionHandlerAdvice {
 	@Autowired
 	Environment environment;
 	
+	@Autowired
+	ErrorInfo errorInfo;
+	
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<String> exceptionHandler(Exception exception){
+	public ResponseEntity<ErrorInfo> exceptionHandler(Exception exception){
+		errorInfo.setErrorMessage(environment.getProperty("General.EXCEPTION_MESSAGE"));
+		errorInfo.setErrorCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+		errorInfo.setTimestamp(LocalDateTime.now());
+		return new ResponseEntity<ErrorInfo>(errorInfo,HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	@ExceptionHandler(InfyException.class)
+	public ResponseEntity<String> infyExceptionHandler(InfyException exception){
 		return new ResponseEntity<String>(exception.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
