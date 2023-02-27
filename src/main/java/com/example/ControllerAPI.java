@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -39,9 +40,9 @@ public class ControllerAPI {
 		return new ResponseEntity<>(c,HttpStatus.OK);
 	}
 	@PostMapping(value="/post")
-	public ResponseEntity<String> postData() {
-		String response = "post data";
-		return new ResponseEntity<>(response,HttpStatus.OK);
+	public ResponseEntity<Customer> postData(@RequestParam("url") String name,@RequestParam Integer age) {
+		Customer c = new Customer(name,age);
+		return new ResponseEntity<>(c,HttpStatus.CREATED);
 	}
 	
 	@PutMapping(value="/put")
